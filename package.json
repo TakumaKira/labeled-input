@@ -11,5 +11,11 @@
     "url": "git+https://github.com/TakumaKira/labeled-input.git"
   },
   "author": "Takuma Kira",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "web-component",
+    "input",
+    "ui",
+    "ux"
+  ]
 }
