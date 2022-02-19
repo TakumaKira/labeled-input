@@ -34,5 +34,5 @@ I recommend using this as a module via CDN, which is the way I intended to use t
   label-color="cyan"
   underline-height="3px"
   underline-height-emphasized="6px"
-  ></labeled-input>
+></labeled-input>
 ```
