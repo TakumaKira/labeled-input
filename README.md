@@ -1,7 +1,5 @@
 # Labeled Input ![language](https://img.shields.io/badge/language-javascript-blue.svg)
 
-A `simple` :zap: readme boilerplate and a generator to customize it even faster!
-
 ## :books: Table of Contents
 
 - [Installation](#package-installation)
