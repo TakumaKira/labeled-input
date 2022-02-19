@@ -1,0 +1,11 @@
+{
+  "name": "labeled-input",
+  "version": "1.0.0",
+  "description": "Web component as input with animated label and underline",
+  "main": "labeled-input.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Takuma Kira",
+  "license": "MIT"
+}
