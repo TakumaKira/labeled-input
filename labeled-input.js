@@ -27,11 +27,11 @@ const styles = `
       bottom: 0;
       width: 100%;
       background-color: var(--underline-color);
-      height: 1px;
+      height: var(--underline-height);
       transition: height 0.3s;
     }
     #labeled-input-wrapper.focus::after, #labeled-input-wrapper.has-value::after {
-      height: 2px;
+      height: var(--underline-height-emphasized);
     }
     #labeled-input {
       display: block;
@@ -165,6 +165,10 @@ export class LabeledInput extends HTMLElement {
       'input-color',
       'underline-color',
       'label-color',
+
+      // Size
+      'underline-height',
+      'underline-height-emphasized',
     ]
   }
   initializeParams() {
@@ -206,6 +210,14 @@ export class LabeledInput extends HTMLElement {
     }
     if (!this.underlineColor) {
       this.underlineColor = 'rgba(0, 0, 0, 0.75)'
+    }
+
+    // Size
+    if (!this.underlineHeight) {
+      this.underlineHeight = '1px'
+    }
+    if (!this.underlineHeightEmphasized) {
+      this.underlineHeightEmphasized = '2px'
     }
   }
   updateParams(name, newVal) {
@@ -250,6 +262,14 @@ export class LabeledInput extends HTMLElement {
       case 'underline-color':
         this.underlineColor = newVal
         break
+
+      // Size
+      case 'underline-height':
+        this.underlineHeight = newVal
+        break
+      case 'underline-height-emphasized':
+        this.underlineHeightEmphasized = newVal
+        break
     }
   }
   render() {
@@ -275,6 +295,10 @@ export class LabeledInput extends HTMLElement {
     this.rootElem.style.setProperty('--label-color', this.labelColor)
     this.rootElem.style.setProperty('--input-color', this.inputColor)
     this.rootElem.style.setProperty('--underline-color', this.underlineColor)
+
+    // Size
+    this.rootElem.style.setProperty('--underline-height', this.underlineHeight)
+    this.rootElem.style.setProperty('--underline-height-emphasized', this.underlineHeightEmphasized)
   }
 }
 
