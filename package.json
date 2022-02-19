@@ -1,10 +1,11 @@
 {
   "name": "labeled-input",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Web component as input with animated label and underline",
   "main": "labeled-input.component.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "test:ci": "karma start karma.conf-ci.js"
   },
   "repository": {
     "type": "git",
