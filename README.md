@@ -31,6 +31,6 @@ I recommend using this as a module via CDN, which is the way I intended to use t
   underline-color="violet"
   label-color="cyan"
   underline-height="3px"
-  underline-height-emphasized="6px"
+  underline-height-focused="6px"
 ></labeled-input>
 ```

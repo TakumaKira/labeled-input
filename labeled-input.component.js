@@ -31,7 +31,7 @@ const styles = `
       transition: height 0.3s;
     }
     #labeled-input-wrapper.focus::after, #labeled-input-wrapper.has-value::after {
-      height: var(--underline-height-emphasized);
+      height: var(--underline-height-focused);
     }
     #labeled-input {
       display: block;
@@ -168,7 +168,7 @@ export class LabeledInput extends HTMLElement {
 
       // Size
       'underline-height',
-      'underline-height-emphasized',
+      'underline-height-focused',
     ]
   }
   initializeParams() {
@@ -182,10 +182,10 @@ export class LabeledInput extends HTMLElement {
       this.fontWeight = 400
     }
     if (!this.fontSize) {
-      this.fontSize = '18px'
+      this.fontSize = '1.2rem'
     }
     if (!this.labelFontSize) {
-      this.labelFontSize = '16px'
+      this.labelFontSize = '1rem'
     }
 
     // Texts
@@ -216,8 +216,8 @@ export class LabeledInput extends HTMLElement {
     if (!this.underlineHeight) {
       this.underlineHeight = '1px'
     }
-    if (!this.underlineHeightEmphasized) {
-      this.underlineHeightEmphasized = '2px'
+    if (!this.underlineHeightFocused) {
+      this.underlineHeightFocused = '2px'
     }
   }
   updateParams(name, newVal) {
@@ -267,8 +267,8 @@ export class LabeledInput extends HTMLElement {
       case 'underline-height':
         this.underlineHeight = newVal
         break
-      case 'underline-height-emphasized':
-        this.underlineHeightEmphasized = newVal
+      case 'underline-height-focused':
+        this.underlineHeightFocused = newVal
         break
     }
   }
@@ -298,7 +298,7 @@ export class LabeledInput extends HTMLElement {
 
     // Size
     this.rootElem.style.setProperty('--underline-height', this.underlineHeight)
-    this.rootElem.style.setProperty('--underline-height-emphasized', this.underlineHeightEmphasized)
+    this.rootElem.style.setProperty('--underline-height-focused', this.underlineHeightFocused)
   }
 }
 
