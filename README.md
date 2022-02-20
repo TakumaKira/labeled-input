@@ -4,12 +4,12 @@
 
 - [Labeled Input !language](#labeled-input-)
   - [:books: Table of Contents](#books-table-of-contents)
-  - [Working example](#working-example)
+  - [:dizzy: Working example](#dizzy-working-example)
   - [:package: Installation](#package-installation)
     - [Include this as a module via CDN](#include-this-as-a-module-via-cdn)
   - [:rocket: Usage](#rocket-usage)
 
-## Working example
+## :dizzy: Working example
 
 You can try this [here](https://takumakira.github.io/labeled-input/).
 
