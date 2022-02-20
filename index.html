@@ -12,9 +12,10 @@
 </head>
 <body>
   <!-- Without any attributes -->
-  <labeled-input></labeled-input>
+  <labeled-input id="my-input"></labeled-input>
   <!-- Without all attributes -->
   <!-- <labeled-input
+    id="my-input"
     font-google="Roboto Slab"
     font-fallback="serif"
     font-weight="100"
@@ -29,5 +30,20 @@
     underline-height="3px"
     underline-height-focused="6px"
   ></labeled-input> -->
+  <button onclick="getValue()">Get value</button>
+  <script>
+    // Get the reference to the element.
+    const myInput = document.getElementById("my-input")
+
+    // You can get the input event like below.
+    myInput.addEventListener("oninput", event => console.log(event.detail.value))
+    // But unfortunately, you can't set the listener like <labeled-input oninput="getValue(this)"></labeled-input>
+    // because there's no way to set any reference to web component's attribute for now(it supports only strings for now).
+
+    // You can get the value like below.
+    function getValue() {
+      console.log(myInput.value)
+    }
+  </script>
 </body>
 </html>

@@ -114,11 +114,15 @@ export class LabeledInput extends HTMLElement {
       }
     })
   }
+  get value() {
+    return this.inputElem.value
+  }
+  set value(v) {
+    this.inputElem.value = v
+  }
   setEventListeners() {
     // input change events
     this.inputElem.oninput = e => {
-      this.value = e.target.value
-
       // Add has-value class when having a value
       const hasValue = this.inputElem.value !== ''
       if (hasValue) {
@@ -130,7 +134,7 @@ export class LabeledInput extends HTMLElement {
       // Dispatch event on input
       this.inputElem.dispatchEvent(new CustomEvent('oninput', {
         detail: {
-          value: e.target.value,
+          value: this.inputElem.value,
         },
         composed: true
       }))
@@ -172,8 +176,6 @@ export class LabeledInput extends HTMLElement {
     ]
   }
   initializeParams() {
-    this.value = ''
-
     // Fonts
     if (!this.fontFallback) {
       this.fontFallback = 'sans-serif'
