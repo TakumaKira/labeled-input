@@ -114,11 +114,15 @@ export class LabeledInput extends HTMLElement {
       }
     })
   }
+  get value() {
+    return this.inputElem.value
+  }
+  set value(v) {
+    this.inputElem.value = v
+  }
   setEventListeners() {
     // input change events
     this.inputElem.oninput = e => {
-      this.value = e.target.value
-
       // Add has-value class when having a value
       const hasValue = this.inputElem.value !== ''
       if (hasValue) {
@@ -130,7 +134,7 @@ export class LabeledInput extends HTMLElement {
       // Dispatch event on input
       this.inputElem.dispatchEvent(new CustomEvent('oninput', {
         detail: {
-          value: e.target.value,
+          value: this.inputElem.value,
         },
         composed: true
       }))
@@ -156,6 +160,7 @@ export class LabeledInput extends HTMLElement {
 
       // Texts
       'label',
+      'value',
 
       // Type
       'type',
@@ -172,8 +177,6 @@ export class LabeledInput extends HTMLElement {
     ]
   }
   initializeParams() {
-    this.value = ''
-
     // Fonts
     if (!this.fontFallback) {
       this.fontFallback = 'sans-serif'
@@ -248,6 +251,9 @@ export class LabeledInput extends HTMLElement {
       case 'type':
         this.type = newVal
         break
+      case 'value':
+        this.value = newVal
+        break
 
       // Colors
       case 'background-color':
@@ -282,7 +288,12 @@ export class LabeledInput extends HTMLElement {
     this.rootElem.style.setProperty('--font-weight', this.fontWeight)
     this.rootElem.style.setProperty('--font-size', this.fontSize)
     this.rootElem.style.setProperty('--label-font-size', this.labelFontSize)
-    this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('px', '')) * 1}px`)
+    if (this.labelFontSize.indexOf('px') !== -1) {
+      this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('px', '')) * 1}px`)
+    } else if (this.labelFontSize.indexOf('rem') !== -1) {
+      const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', '')) // This line makes render slower
+      this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('rem', '')) * 1.2 * baseFontSize}px`)
+    }
 
     // Texts
     this.labelElem.textContent = this.label

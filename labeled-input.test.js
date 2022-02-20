@@ -8,7 +8,7 @@ beforeEach(() => {
 })
 
 describe('LabeledInput Component', () => {
-  it('displays default label without passing any attribute', async () => {
+  it('displays default style label without passing any attribute', async () => {
     const {root} = await TestUtils.render('labeled-input')
     expect(getComputedStyle(root.host).fontFamily).toBe('sans-serif')
     expect(mockWebFontLoadFn).not.toHaveBeenCalled()
@@ -24,6 +24,7 @@ describe('LabeledInput Component', () => {
     expect(getComputedStyle(wrapperElem).backgroundColor).toBe('rgba(0, 0, 0, 0)')
     expect(getComputedStyle(inputElem).color).toBe('rgb(0, 0, 0)')
     expect(getComputedStyle(wrapperElem, ':after').backgroundColor).toBe('rgba(0, 0, 0, 0.75)')
+    await new Promise(resolve => setTimeout(resolve, 500)) // `getComputedStyle(document.body).fontSize` makes render slower
     expect(getComputedStyle(labelElem).color).toBe('rgba(0, 0, 0, 0.5)')
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('1px')
     expect(getComputedStyle(labelElem).transform).toBe('none')
@@ -44,7 +45,7 @@ describe('LabeledInput Component', () => {
     expect(getComputedStyle(labelElem).transform).toBe('none')
   })
 
-  it('displays label with full attributes', async () => {
+  it('displays styled label with full attributes', async () => {
     const fontGoogle = 'Roboto Slab'
     const fontFallback = 'serif'
     const fontWeight = 100
@@ -79,6 +80,7 @@ describe('LabeledInput Component', () => {
     const inputElem = root.querySelector('input')
     expect(getComputedStyle(inputElem).fontSize).toBe(fontSize)
     const labelElem = root.querySelector('label')
+    await new Promise(resolve => setTimeout(resolve, 500)) // `getComputedStyle(document.body).fontSize` makes render slower
     expect(getComputedStyle(labelElem).fontSize).toBe(labelFontSize)
     const hasLabelText = root.innerHTML.includes(label)
     expect(hasLabelText).toBeTruthy()
@@ -105,6 +107,21 @@ describe('LabeledInput Component', () => {
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeight)
     expect(getComputedStyle(labelElem).transform).toBe('none')
+  })
+
+  it('dispatches input event and provide value', async () => {
+    const {root} = await TestUtils.render('labeled-input')
+    const labeledInput = root.host
+    expect(labeledInput.value).toBe('')
+    const eventSpy = jasmine.createSpy()
+    labeledInput.addEventListener('oninput', eventSpy)
+    const value = 'a'
+    labeledInput.value = value
+    const inputElem = root.querySelector('input')
+    inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
+    const event = new CustomEvent('oninput', {detail: {value}, composed: true})
+    expect(eventSpy).toHaveBeenCalledWith(event)
+    expect(labeledInput.value).toBe(value)
   })
 
   it('uses fallback font if not passed google font', async () => {

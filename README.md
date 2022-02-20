@@ -2,8 +2,16 @@
 
 ## :books: Table of Contents
 
-- [Installation](#package-installation)
-- [Usage](#rocket-usage)
+- [Labeled Input !language](#labeled-input-)
+  - [:books: Table of Contents](#books-table-of-contents)
+  - [Working example](#working-example)
+  - [:package: Installation](#package-installation)
+    - [Include this as a module via CDN](#include-this-as-a-module-via-cdn)
+  - [:rocket: Usage](#rocket-usage)
+
+## Working example
+
+You can try this [here]([Working example](https://takumakira.github.io/labeled-input/)).
 
 ## :package: Installation
 
@@ -19,6 +27,7 @@ I recommend using this as a module via CDN, which is the way I intended to use t
 
 ```html
 <labeled-input
+  id="my-input"
   font-google="Roboto Slab"
   font-fallback="serif"
   font-weight="100"
@@ -33,4 +42,27 @@ I recommend using this as a module via CDN, which is the way I intended to use t
   underline-height="3px"
   underline-height-focused="6px"
 ></labeled-input>
+```
+
+Get the reference to the element.
+
+```javascript
+const myInput = document.getElementById("my-input")
+```
+
+You can get the input event like below.
+
+```javascript
+myInput.addEventListener("oninput", event => console.log(event.detail.value))
+```
+
+But unfortunately, you can't set the listener like ```<labeled-input oninput="getValue(this)"></labeled-input>```
+because there's no way to set any reference to web component's attribute for now(it supports only strings for now).
+
+You can get the value like below.
+
+```javascript
+function getValue() {
+  console.log(myInput.value)
+}
 ```
