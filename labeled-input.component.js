@@ -284,7 +284,12 @@ export class LabeledInput extends HTMLElement {
     this.rootElem.style.setProperty('--font-weight', this.fontWeight)
     this.rootElem.style.setProperty('--font-size', this.fontSize)
     this.rootElem.style.setProperty('--label-font-size', this.labelFontSize)
-    this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('px', '')) * 1}px`)
+    if (this.labelFontSize.indexOf('px') !== -1) {
+      this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('px', '')) * 1}px`)
+    } else if (this.labelFontSize.indexOf('rem') !== -1) {
+      const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', ''))
+      this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('rem', '')) * 1.2 * baseFontSize}px`)
+    }
 
     // Texts
     this.labelElem.textContent = this.label
