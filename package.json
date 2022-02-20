@@ -1,6 +1,6 @@
 {
   "name": "labeled-input",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Web component as input with animated label and underline",
   "main": "labeled-input.component.js",
   "scripts": {
