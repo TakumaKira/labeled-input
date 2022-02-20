@@ -2,7 +2,7 @@
 
 ## :books: Table of Contents
 
-- [Labeled Input !language](#labeled-input-)
+- [Labeled Input](#labeled-input-)
   - [:books: Table of Contents](#books-table-of-contents)
   - [:dizzy: Working example](#dizzy-working-example)
   - [:package: Installation](#package-installation)
