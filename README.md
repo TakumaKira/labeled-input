@@ -11,7 +11,7 @@
 
 ## Working example
 
-You can try this [here]([Working example](https://takumakira.github.io/labeled-input/)).
+You can try this [here](https://takumakira.github.io/labeled-input/).
 
 ## :package: Installation
 
@@ -34,6 +34,7 @@ I recommend using this as a module via CDN, which is the way I intended to use t
   font-size="30px"
   label-font-size="20px"
   label="Password"
+  value="initial value"
   type="password"
   background-color="grey"
   input-color="white"
@@ -64,5 +65,13 @@ You can get the value like below.
 ```javascript
 function getValue() {
   console.log(myInput.value)
+}
+```
+
+And set the value like below.
+
+```javascript
+function setValue() {
+  myInput.value = "set value"
 }
 ```
