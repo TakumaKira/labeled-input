@@ -291,7 +291,7 @@ export class LabeledInput extends HTMLElement {
     if (this.labelFontSize.indexOf('px') !== -1) {
       this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('px', '')) * 1}px`)
     } else if (this.labelFontSize.indexOf('rem') !== -1) {
-      const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', ''))
+      const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', '')) // This line makes render slower
       this.rootElem.style.setProperty('--padding-top', `${Number(this.labelFontSize.replace('rem', '')) * 1.2 * baseFontSize}px`)
     }
 
