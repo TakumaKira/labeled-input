@@ -22,6 +22,7 @@
     font-size="30px"
     label-font-size="20px"
     label="Password"
+    value="initial"
     type="password"
     background-color="grey"
     input-color="white"
@@ -31,6 +32,7 @@
     underline-height-focused="6px"
   ></labeled-input> -->
   <button onclick="getValue()" style="margin-top: 10px;">Get value</button>
+  <button onclick="setValue()" style="margin-top: 10px;">Set value</button>
   <script>
     // Get the reference to the element.
     const myInput = document.getElementById("my-input")
@@ -43,6 +45,10 @@
     // You can get the value like below.
     function getValue() {
       console.log(myInput.value)
+    }
+
+    function setValue() {
+      myInput.value = "set value"
     }
   </script>
 </body>

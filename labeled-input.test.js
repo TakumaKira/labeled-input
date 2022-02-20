@@ -24,6 +24,7 @@ describe('LabeledInput Component', () => {
     expect(getComputedStyle(wrapperElem).backgroundColor).toBe('rgba(0, 0, 0, 0)')
     expect(getComputedStyle(inputElem).color).toBe('rgb(0, 0, 0)')
     expect(getComputedStyle(wrapperElem, ':after').backgroundColor).toBe('rgba(0, 0, 0, 0.75)')
+    await new Promise(resolve => setTimeout(resolve, 500)) // TODO: Investigate why this waiting starts to be needed
     expect(getComputedStyle(labelElem).color).toBe('rgba(0, 0, 0, 0.5)')
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('1px')
     expect(getComputedStyle(labelElem).transform).toBe('none')
@@ -79,6 +80,7 @@ describe('LabeledInput Component', () => {
     const inputElem = root.querySelector('input')
     expect(getComputedStyle(inputElem).fontSize).toBe(fontSize)
     const labelElem = root.querySelector('label')
+    await new Promise(resolve => setTimeout(resolve, 500)) // TODO: Investigate why this waiting starts to be needed
     expect(getComputedStyle(labelElem).fontSize).toBe(labelFontSize)
     const hasLabelText = root.innerHTML.includes(label)
     expect(hasLabelText).toBeTruthy()

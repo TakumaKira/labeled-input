@@ -160,6 +160,7 @@ export class LabeledInput extends HTMLElement {
 
       // Texts
       'label',
+      'value',
 
       // Type
       'type',
@@ -249,6 +250,9 @@ export class LabeledInput extends HTMLElement {
       // Type
       case 'type':
         this.type = newVal
+        break
+      case 'value':
+        this.value = newVal
         break
 
       // Colors
