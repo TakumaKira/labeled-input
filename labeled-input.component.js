@@ -1,5 +1,3 @@
-import 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js'
-
 const template = document.createElement('template')
 const elements = `
   <div id="labeled-input-wrapper">
@@ -80,7 +78,6 @@ export class LabeledInput extends HTMLElement {
     this.initializeParams()
   }
   connectedCallback() {
-    this.loadFont()
     this.setEventListeners()
     this.render()
   }
@@ -101,18 +98,6 @@ export class LabeledInput extends HTMLElement {
     this.wrapperElem = this.root.querySelector('#labeled-input-wrapper')
     this.inputElem = this.root.querySelector('#labeled-input')
     this.labelElem = this.root.querySelector('#labeled-input-label')
-  }
-  loadFont() {
-    if (!this.fontGoogle) {
-      return
-    }
-    WebFont.load({
-      google: {
-        families: [
-          `${this.fontGoogle}:${this.fontWeight}`,
-        ]
-      }
-    })
   }
   get value() {
     return this.inputElem.value
@@ -152,8 +137,7 @@ export class LabeledInput extends HTMLElement {
   static get observedAttributes() {
     return [
       // Fonts
-      'font-google',
-      'font-fallback',
+      'font-family',
       'font-weight',
       'font-size',
       'label-font-size',
@@ -178,8 +162,8 @@ export class LabeledInput extends HTMLElement {
   }
   initializeParams() {
     // Fonts
-    if (!this.fontFallback) {
-      this.fontFallback = 'sans-serif'
+    if (!this.fontFamily) {
+      this.fontFamily = 'sans-serif'
     }
     if (!this.fontWeight) {
       this.fontWeight = 400
@@ -226,11 +210,8 @@ export class LabeledInput extends HTMLElement {
   updateParams(name, newVal) {
     switch(name) {
       // Fonts
-      case 'font-google':
-        this.fontGoogle = newVal
-        break
-      case 'font-fallback':
-        this.fontFallback = newVal
+      case 'font-family':
+        this.fontFamily = newVal
         break
       case 'font-weight':
         this.fontWeight = newVal
@@ -280,11 +261,7 @@ export class LabeledInput extends HTMLElement {
   }
   render() {
     // Fonts
-    if (this.fontGoogle) {
-      this.rootElem.style.setProperty('--font-family', `'${this.fontGoogle}', ${this.fontFallback}`)
-    } else {
-      this.rootElem.style.setProperty('--font-family', this.fontFallback)
-    }
+    this.rootElem.style.setProperty('--font-family', this.fontFamily)
     this.rootElem.style.setProperty('--font-weight', this.fontWeight)
     this.rootElem.style.setProperty('--font-size', this.fontSize)
     this.rootElem.style.setProperty('--label-font-size', this.labelFontSize)

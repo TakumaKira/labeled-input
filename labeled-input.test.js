@@ -1,17 +1,10 @@
 import './labeled-input.component.js'
 import { TestUtils } from './test-utils.js'
 
-let mockWebFontLoadFn
-
-beforeEach(() => {
-  mockWebFontLoadFn = spyOn(window.WebFont, 'load')
-})
-
 describe('LabeledInput Component', () => {
   it('displays default style label without passing any attribute', async () => {
     const {root} = await TestUtils.render('labeled-input')
     expect(getComputedStyle(root.host).fontFamily).toBe('sans-serif')
-    expect(mockWebFontLoadFn).not.toHaveBeenCalled()
     const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', ''))
     const inputElem = root.querySelector('input')
     expect(getComputedStyle(inputElem).fontSize).toBe(`${baseFontSize * 1.2}px`)
@@ -46,8 +39,7 @@ describe('LabeledInput Component', () => {
   })
 
   it('displays styled label with full attributes', async () => {
-    const fontGoogle = 'Roboto Slab'
-    const fontFallback = 'serif'
+    const fontFamily = 'serif'
     const fontWeight = 100
     const fontSize = '30px'
     const labelFontSize = '20px'
@@ -60,8 +52,7 @@ describe('LabeledInput Component', () => {
     const underlineHeight = '2px'
     const underlineHeightFocused = '4px'
     const attributes = {
-      'font-google': fontGoogle,
-      'font-fallback': fontFallback,
+      'font-family': fontFamily,
       'font-weight': fontWeight,
       'font-size': fontSize,
       'label-font-size': labelFontSize,
@@ -75,8 +66,7 @@ describe('LabeledInput Component', () => {
       'underline-height-focused': underlineHeightFocused,
     }
     const {root} = await TestUtils.render('labeled-input', attributes)
-    expect(getComputedStyle(root.host).fontFamily).toBe(`"${fontGoogle}", ${fontFallback}`)
-    expect(mockWebFontLoadFn).toHaveBeenCalledWith({google: {families: [`${fontGoogle}:${fontWeight}`]}})
+    expect(getComputedStyle(root.host).fontFamily).toBe(fontFamily)
     const inputElem = root.querySelector('input')
     expect(getComputedStyle(inputElem).fontSize).toBe(fontSize)
     const labelElem = root.querySelector('label')
@@ -122,14 +112,5 @@ describe('LabeledInput Component', () => {
     const event = new CustomEvent('oninput', {detail: {value}, composed: true})
     expect(eventSpy).toHaveBeenCalledWith(event)
     expect(labeledInput.value).toBe(value)
-  })
-
-  it('uses fallback font if not passed google font', async () => {
-    const fontFallback = 'serif'
-    const attributes = {
-      'font-fallback': fontFallback,
-    }
-    const {root} = await TestUtils.render('labeled-input', attributes)
-    expect(getComputedStyle(root.host).fontFamily).toBe(fontFallback)
   })
 })

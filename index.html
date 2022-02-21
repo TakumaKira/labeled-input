@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Labeled Input Demo</title>
   <!-- Import like below -->
   <script src="https://unpkg.com/labeled-input" type="module"></script>
   <!-- Or like below if you want to put the copy into your project-->
   <!-- <script src="./labeled-input.component.js" type="module"></script> -->
+  <!-- If you want to use custom font, import it and set "font-family" attribute -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Without any attributes -->
@@ -16,8 +16,7 @@
   <!-- Without all attributes -->
   <!-- <labeled-input
     id="my-input"
-    font-google="Roboto Slab"
-    font-fallback="serif"
+    font-family="'Roboto Slab', serif"
     font-weight="100"
     font-size="30px"
     label-font-size="20px"

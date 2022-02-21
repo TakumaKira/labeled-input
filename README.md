@@ -28,8 +28,7 @@ I recommend using this as a module via CDN, which is the way I intended to use t
 ```html
 <labeled-input
   id="my-input"
-  font-google="Roboto Slab"
-  font-fallback="serif"
+  font-family="serif"
   font-weight="100"
   font-size="30px"
   label-font-size="20px"
