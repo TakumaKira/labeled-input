@@ -54,7 +54,7 @@ const styles = `
       position: absolute;
       margin-left: 10px;
       transform-origin: center left;
-      transition: all 0.3s;
+      transition: transform 0.3s;
       color: var(--label-color);
       font-size: var(--label-font-size);
       pointer-events: none;
