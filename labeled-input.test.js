@@ -3,12 +3,15 @@ import { TestUtils } from './test-utils.js'
 
 describe('LabeledInput Component', () => {
   it('displays default style label without passing any attribute', async () => {
+    const defaultFontFamily = 'sans-serif'
     const {root} = await TestUtils.render('labeled-input')
-    expect(getComputedStyle(root.host).fontFamily).toBe('sans-serif')
+    expect(getComputedStyle(root.host).fontFamily).toBe(defaultFontFamily)
     const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', ''))
     const inputElem = root.querySelector('input')
+    expect(getComputedStyle(inputElem).fontFamily).toBe(defaultFontFamily)
     expect(getComputedStyle(inputElem).fontSize).toBe(`${baseFontSize * 1.2}px`)
     const labelElem = root.querySelector('label')
+    expect(getComputedStyle(labelElem).fontFamily).toBe(defaultFontFamily)
     expect(getComputedStyle(labelElem).fontSize).toBe(`${baseFontSize}px`)
     const hasLabelText = root.innerHTML.includes('Label')
     expect(hasLabelText).toBeTruthy()
@@ -67,8 +70,10 @@ describe('LabeledInput Component', () => {
     const {root} = await TestUtils.render('labeled-input', attributes)
     expect(getComputedStyle(root.host).fontFamily).toBe(fontFamily)
     const inputElem = root.querySelector('input')
+    expect(getComputedStyle(inputElem).fontFamily).toBe(fontFamily)
     expect(getComputedStyle(inputElem).fontSize).toBe(fontSize)
     const labelElem = root.querySelector('label')
+    expect(getComputedStyle(labelElem).fontFamily).toBe(fontFamily)
     expect(getComputedStyle(labelElem).fontSize).toBe(labelFontSize)
     const hasLabelText = root.innerHTML.includes(label)
     expect(hasLabelText).toBeTruthy()
