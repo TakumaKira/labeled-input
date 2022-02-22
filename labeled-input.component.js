@@ -1,5 +1,3 @@
-import 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js'
-
 const template = document.createElement('template')
 const elements = `
   <div id="labeled-input-wrapper">
@@ -16,7 +14,7 @@ const styles = `
     #labeled-input-wrapper {
       position: relative;
       width: 100%;
-      padding-top: var(--padding-top);
+      padding-top: calc(var(--label-font-size) * 0.8);
       display: flex;
       align-items: center;
       background-color: var(--background-color);
@@ -35,13 +33,14 @@ const styles = `
     }
     #labeled-input {
       display: block;
-      width: 95%;
+      width: 100%;
       border: none;
       outline: none;
       background-color: transparent;
       font-family: var(--font-family);
       font-size: var(--font-size);
-      padding: 5px 10px;
+      height: var(--font-size);
+      padding: calc(var(--font-size) * 0.25) 10px;
       color: var(--input-color);
     }
     #labeled-input:-webkit-autofill,
@@ -56,14 +55,15 @@ const styles = `
       position: absolute;
       margin-left: 10px;
       transform-origin: center left;
-      transition: all 0.3s;
+      transition: transform 0.3s;
       color: var(--label-color);
       font-size: var(--label-font-size);
+      line-height: 1;
       pointer-events: none;
     }
     #labeled-input:focus + #labeled-input-label,
     #labeled-input:not(:placeholder-shown) + #labeled-input-label {
-      transform: translateY(-110%) scale(0.8);
+      transform: translateY(calc(-1 * (var(--font-size)/2 + var(--label-font-size)*0.8/2 + calc(var(--font-size) * 0.25)))) scale(0.8);
     }
   </style>
 `
@@ -80,7 +80,6 @@ export class LabeledInput extends HTMLElement {
     this.initializeParams()
   }
   connectedCallback() {
-    this.loadFont()
     this.setEventListeners()
     this.render()
   }
@@ -101,18 +100,6 @@ export class LabeledInput extends HTMLElement {
     this.wrapperElem = this.root.querySelector('#labeled-input-wrapper')
     this.inputElem = this.root.querySelector('#labeled-input')
     this.labelElem = this.root.querySelector('#labeled-input-label')
-  }
-  loadFont() {
-    if (!this.fontGoogle) {
-      return
-    }
-    WebFont.load({
-      google: {
-        families: [
-          `${this.fontGoogle}:${this.fontWeight}`,
-        ]
-      }
-    })
   }
   get value() {
     return this.inputElem.value
@@ -152,8 +139,7 @@ export class LabeledInput extends HTMLElement {
   static get observedAttributes() {
     return [
       // Fonts
-      'font-google',
-      'font-fallback',
+      'font-family',
       'font-weight',
       'font-size',
       'label-font-size',
@@ -178,8 +164,8 @@ export class LabeledInput extends HTMLElement {
   }
   initializeParams() {
     // Fonts
-    if (!this.fontFallback) {
-      this.fontFallback = 'sans-serif'
+    if (!this.fontFamily) {
+      this.fontFamily = 'sans-serif'
     }
     if (!this.fontWeight) {
       this.fontWeight = 400
@@ -226,11 +212,8 @@ export class LabeledInput extends HTMLElement {
   updateParams(name, newVal) {
     switch(name) {
       // Fonts
-      case 'font-google':
-        this.fontGoogle = newVal
-        break
-      case 'font-fallback':
-        this.fontFallback = newVal
+      case 'font-family':
+        this.fontFamily = newVal
         break
       case 'font-weight':
         this.fontWeight = newVal
@@ -280,11 +263,7 @@ export class LabeledInput extends HTMLElement {
   }
   render() {
     // Fonts
-    if (this.fontGoogle) {
-      this.rootElem.style.setProperty('--font-family', `'${this.fontGoogle}', ${this.fontFallback}`)
-    } else {
-      this.rootElem.style.setProperty('--font-family', this.fontFallback)
-    }
+    this.rootElem.style.setProperty('--font-family', this.fontFamily)
     this.rootElem.style.setProperty('--font-weight', this.fontWeight)
     this.rootElem.style.setProperty('--font-size', this.fontSize)
     this.rootElem.style.setProperty('--label-font-size', this.labelFontSize)

@@ -1,21 +1,17 @@
 import './labeled-input.component.js'
 import { TestUtils } from './test-utils.js'
 
-let mockWebFontLoadFn
-
-beforeEach(() => {
-  mockWebFontLoadFn = spyOn(window.WebFont, 'load')
-})
-
 describe('LabeledInput Component', () => {
   it('displays default style label without passing any attribute', async () => {
+    const defaultFontFamily = 'sans-serif'
     const {root} = await TestUtils.render('labeled-input')
-    expect(getComputedStyle(root.host).fontFamily).toBe('sans-serif')
-    expect(mockWebFontLoadFn).not.toHaveBeenCalled()
+    expect(getComputedStyle(root.host).fontFamily).toBe(defaultFontFamily)
     const baseFontSize = Number(getComputedStyle(document.body).fontSize.replace('px', ''))
     const inputElem = root.querySelector('input')
+    expect(getComputedStyle(inputElem).fontFamily).toBe(defaultFontFamily)
     expect(getComputedStyle(inputElem).fontSize).toBe(`${baseFontSize * 1.2}px`)
     const labelElem = root.querySelector('label')
+    expect(getComputedStyle(labelElem).fontFamily).toBe(defaultFontFamily)
     expect(getComputedStyle(labelElem).fontSize).toBe(`${baseFontSize}px`)
     const hasLabelText = root.innerHTML.includes('Label')
     expect(hasLabelText).toBeTruthy()
@@ -24,20 +20,21 @@ describe('LabeledInput Component', () => {
     expect(getComputedStyle(wrapperElem).backgroundColor).toBe('rgba(0, 0, 0, 0)')
     expect(getComputedStyle(inputElem).color).toBe('rgb(0, 0, 0)')
     expect(getComputedStyle(wrapperElem, ':after').backgroundColor).toBe('rgba(0, 0, 0, 0.75)')
-    await new Promise(resolve => setTimeout(resolve, 500)) // `getComputedStyle(document.body).fontSize` makes render slower
     expect(getComputedStyle(labelElem).color).toBe('rgba(0, 0, 0, 0.5)')
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('1px')
     expect(getComputedStyle(labelElem).transform).toBe('none')
     inputElem.focus()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('2px')
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, -${Number(getComputedStyle(labelElem).height.replace('px', '')) * 1.1})`)
+    const translateY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
+    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY1 * 10) / 10})`)
     inputElem.value = 'a'
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     inputElem.blur()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('2px')
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, -${Number(getComputedStyle(labelElem).height.replace('px', '')) * 1.1})`)
+    const translateY2 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
+    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY2 * 10) / 10})`)
     inputElem.value = ''
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -46,8 +43,7 @@ describe('LabeledInput Component', () => {
   })
 
   it('displays styled label with full attributes', async () => {
-    const fontGoogle = 'Roboto Slab'
-    const fontFallback = 'serif'
+    const fontFamily = 'serif'
     const fontWeight = 100
     const fontSize = '30px'
     const labelFontSize = '20px'
@@ -60,8 +56,7 @@ describe('LabeledInput Component', () => {
     const underlineHeight = '2px'
     const underlineHeightFocused = '4px'
     const attributes = {
-      'font-google': fontGoogle,
-      'font-fallback': fontFallback,
+      'font-family': fontFamily,
       'font-weight': fontWeight,
       'font-size': fontSize,
       'label-font-size': labelFontSize,
@@ -75,12 +70,12 @@ describe('LabeledInput Component', () => {
       'underline-height-focused': underlineHeightFocused,
     }
     const {root} = await TestUtils.render('labeled-input', attributes)
-    expect(getComputedStyle(root.host).fontFamily).toBe(`"${fontGoogle}", ${fontFallback}`)
-    expect(mockWebFontLoadFn).toHaveBeenCalledWith({google: {families: [`${fontGoogle}:${fontWeight}`]}})
+    expect(getComputedStyle(root.host).fontFamily).toBe(fontFamily)
     const inputElem = root.querySelector('input')
+    expect(getComputedStyle(inputElem).fontFamily).toBe(fontFamily)
     expect(getComputedStyle(inputElem).fontSize).toBe(fontSize)
     const labelElem = root.querySelector('label')
-    await new Promise(resolve => setTimeout(resolve, 500)) // `getComputedStyle(document.body).fontSize` makes render slower
+    expect(getComputedStyle(labelElem).fontFamily).toBe(fontFamily)
     expect(getComputedStyle(labelElem).fontSize).toBe(labelFontSize)
     const hasLabelText = root.innerHTML.includes(label)
     expect(hasLabelText).toBeTruthy()
@@ -95,13 +90,15 @@ describe('LabeledInput Component', () => {
     inputElem.focus()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeightFocused)
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, -${Number(getComputedStyle(labelElem).height.replace('px', '')) * 1.1})`)
+    const translateY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
+    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY1 * 10) / 10})`)
     inputElem.value = 'a'
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     inputElem.blur()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeightFocused)
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, -${Number(getComputedStyle(labelElem).height.replace('px', '')) * 1.1})`)
+    const translateY2 = - 1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
+    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY2 * 10) / 10})`)
     inputElem.value = ''
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -122,14 +119,5 @@ describe('LabeledInput Component', () => {
     const event = new CustomEvent('oninput', {detail: {value}, composed: true})
     expect(eventSpy).toHaveBeenCalledWith(event)
     expect(labeledInput.value).toBe(value)
-  })
-
-  it('uses fallback font if not passed google font', async () => {
-    const fontFallback = 'serif'
-    const attributes = {
-      'font-fallback': fontFallback,
-    }
-    const {root} = await TestUtils.render('labeled-input', attributes)
-    expect(getComputedStyle(root.host).fontFamily).toBe(fontFallback)
   })
 })

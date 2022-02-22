@@ -28,8 +28,7 @@ I recommend using this as a module via CDN, which is the way I intended to use t
 ```html
 <labeled-input
   id="my-input"
-  font-google="Roboto Slab"
-  font-fallback="serif"
+  font-family="serif"
   font-weight="100"
   font-size="30px"
   label-font-size="20px"
@@ -74,4 +73,23 @@ And set the value like below.
 function setValue() {
   myInput.value = "set value"
 }
+```
+
+I removed google font loader library as of v3.0.0 because it makes this element work slower and you can use any font without it by common way.
+
+If you still want to use google font with this element, import it like...
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&display=swap" rel="stylesheet">
+```
+
+as [their tool suggests](https://fonts.google.com/), and set it to this element like...
+
+```html
+  <labeled-input
+    font-family="'Roboto Slab', serif"
+    font-weight="100"
+  ></labeled-input>
 ```
