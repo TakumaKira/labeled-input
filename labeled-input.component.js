@@ -14,7 +14,7 @@ const styles = `
     #labeled-input-wrapper {
       position: relative;
       width: 100%;
-      padding-top: var(--padding-top);
+      padding-top: calc(var(--label-font-size) * 0.8);
       display: flex;
       align-items: center;
       background-color: var(--background-color);
@@ -33,13 +33,14 @@ const styles = `
     }
     #labeled-input {
       display: block;
-      width: 95%;
+      width: 100%;
       border: none;
       outline: none;
       background-color: transparent;
       font-family: var(--font-family);
       font-size: var(--font-size);
-      padding: 5px 10px;
+      height: var(--font-size);
+      padding: calc(var(--font-size) * 0.25) 10px;
       color: var(--input-color);
     }
     #labeled-input:-webkit-autofill,
@@ -57,11 +58,12 @@ const styles = `
       transition: transform 0.3s;
       color: var(--label-color);
       font-size: var(--label-font-size);
+      line-height: 1;
       pointer-events: none;
     }
     #labeled-input:focus + #labeled-input-label,
     #labeled-input:not(:placeholder-shown) + #labeled-input-label {
-      transform: translateY(-110%) scale(0.8);
+      transform: translateY(calc(-1 * (var(--font-size)/2 + var(--label-font-size)*0.8/2 + calc(var(--font-size) * 0.25)))) scale(0.8);
     }
   </style>
 `
