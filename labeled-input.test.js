@@ -26,7 +26,7 @@ describe('LabeledInput Component', () => {
     inputElem.focus()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('2px')
-    const expectedY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const expectedY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.25)
     const resultTransform1 = getComputedStyle(labelElem).transform
     const substr1 = resultTransform1.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY1 = Number(substr1.substring(0, substr1.length - 1))
@@ -36,7 +36,7 @@ describe('LabeledInput Component', () => {
     inputElem.blur()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('2px')
-    const expectedY2 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const expectedY2 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.25)
     const resultTransform2 = getComputedStyle(labelElem).transform
     const substr2 = resultTransform2.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY2 = Number(substr2.substring(0, substr2.length - 1))
@@ -96,7 +96,7 @@ describe('LabeledInput Component', () => {
     inputElem.focus()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeightFocused)
-    const expectedY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const expectedY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.25)
     const resultTransform1 = getComputedStyle(labelElem).transform
     const substr1 = resultTransform1.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY1 = Number(substr1.substring(0, substr1.length - 1))
@@ -106,7 +106,7 @@ describe('LabeledInput Component', () => {
     inputElem.blur()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeightFocused)
-    const expectedY2 = - 1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const expectedY2 = - 1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.25)
     const resultTransform2 = getComputedStyle(labelElem).transform
     const substr2 = resultTransform2.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY2 = Number(substr2.substring(0, substr2.length - 1))
