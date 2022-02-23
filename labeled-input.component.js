@@ -14,7 +14,7 @@ const styles = `
     #labeled-input-wrapper {
       position: relative;
       width: 100%;
-      padding-top: calc(var(--label-font-size) * 0.8);
+      padding-top: calc(var(--label-font-size) * 0.8 + var(--font-size) * 0.2);
       display: flex;
       align-items: center;
       background-color: var(--background-color);
@@ -39,8 +39,7 @@ const styles = `
       background-color: transparent;
       font-family: var(--font-family);
       font-size: var(--font-size);
-      height: var(--font-size);
-      padding: calc(var(--font-size) * 0.25) 10px;
+      padding: 0 10px;
       color: var(--input-color);
     }
     #labeled-input:-webkit-autofill,
@@ -63,7 +62,7 @@ const styles = `
     }
     #labeled-input:focus + #labeled-input-label,
     #labeled-input:not(:placeholder-shown) + #labeled-input-label {
-      transform: translateY(calc(-1 * (var(--font-size)/2 + var(--label-font-size)*0.8/2 + calc(var(--font-size) * 0.25)))) scale(0.8);
+      transform: translateY(calc(-1 * (var(--font-size)*1.2/2 + var(--label-font-size)*0.8/2 + calc(var(--font-size) * 0.2)))) scale(0.8);
     }
   </style>
 `
