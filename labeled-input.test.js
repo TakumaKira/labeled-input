@@ -26,15 +26,21 @@ describe('LabeledInput Component', () => {
     inputElem.focus()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('2px')
-    const translateY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY1 * 10) / 10})`)
+    const expectedY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const resultTransform1 = getComputedStyle(labelElem).transform
+    const substr1 = resultTransform1.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
+    const resultY1 = Number(substr1.substring(0, substr1.length - 1))
+    expect(Math.abs(resultY1 - expectedY1)).toBeLessThanOrEqual(1)
     inputElem.value = 'a'
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     inputElem.blur()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe('2px')
-    const translateY2 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY2 * 10) / 10})`)
+    const expectedY2 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const resultTransform2 = getComputedStyle(labelElem).transform
+    const substr2 = resultTransform2.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
+    const resultY2 = Number(substr2.substring(0, substr2.length - 1))
+    expect(Math.abs(resultY2 - expectedY2)).toBeLessThanOrEqual(1)
     inputElem.value = ''
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -90,15 +96,21 @@ describe('LabeledInput Component', () => {
     inputElem.focus()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeightFocused)
-    const translateY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY1 * 10) / 10})`)
+    const expectedY1 = -1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const resultTransform1 = getComputedStyle(labelElem).transform
+    const substr1 = resultTransform1.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
+    const resultY1 = Number(substr1.substring(0, substr1.length - 1))
+    expect(Math.abs(resultY1 - expectedY1)).toBeLessThanOrEqual(1)
     inputElem.value = 'a'
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     inputElem.blur()
     await new Promise(resolve => setTimeout(resolve, 500))
     expect(getComputedStyle(wrapperElem, ':after').height).toBe(underlineHeightFocused)
-    const translateY2 = - 1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) * 0.25)
-    expect(getComputedStyle(labelElem).transform).toBe(`matrix(0.8, 0, 0, 0.8, 0, ${Math.round(translateY2 * 10) / 10})`)
+    const expectedY2 = - 1 * (Number(getComputedStyle(inputElem).height.replace('px', '')) / 2 + Number(getComputedStyle(labelElem).height.replace('px', '')) * 0.8 / 2 + Number(getComputedStyle(inputElem).height.replace('px', '')) / 1.2 * 0.2)
+    const resultTransform2 = getComputedStyle(labelElem).transform
+    const substr2 = resultTransform2.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
+    const resultY2 = Number(substr2.substring(0, substr2.length - 1))
+    expect(Math.abs(resultY2 - expectedY2)).toBeLessThanOrEqual(1)
     inputElem.value = ''
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     await new Promise(resolve => setTimeout(resolve, 500))
