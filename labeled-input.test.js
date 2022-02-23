@@ -30,7 +30,7 @@ describe('LabeledInput Component', () => {
     const resultTransform1 = getComputedStyle(labelElem).transform
     const substr1 = resultTransform1.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY1 = Number(substr1.substring(0, substr1.length - 1))
-    expect(Math.abs(resultY1 - expectedY1)).toBeLessThanOrEqual(1)
+    expect(Math.abs(resultY1 - expectedY1)).toBeLessThanOrEqual(2)
     inputElem.value = 'a'
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     inputElem.blur()
@@ -40,7 +40,7 @@ describe('LabeledInput Component', () => {
     const resultTransform2 = getComputedStyle(labelElem).transform
     const substr2 = resultTransform2.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY2 = Number(substr2.substring(0, substr2.length - 1))
-    expect(Math.abs(resultY2 - expectedY2)).toBeLessThanOrEqual(1)
+    expect(Math.abs(resultY2 - expectedY2)).toBeLessThanOrEqual(2)
     inputElem.value = ''
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -100,7 +100,7 @@ describe('LabeledInput Component', () => {
     const resultTransform1 = getComputedStyle(labelElem).transform
     const substr1 = resultTransform1.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY1 = Number(substr1.substring(0, substr1.length - 1))
-    expect(Math.abs(resultY1 - expectedY1)).toBeLessThanOrEqual(1)
+    expect(Math.abs(resultY1 - expectedY1)).toBeLessThanOrEqual(2)
     inputElem.value = 'a'
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     inputElem.blur()
@@ -110,7 +110,7 @@ describe('LabeledInput Component', () => {
     const resultTransform2 = getComputedStyle(labelElem).transform
     const substr2 = resultTransform2.split('matrix(0.8, 0, 0, 0.8, 0, ')[1]
     const resultY2 = Number(substr2.substring(0, substr2.length - 1))
-    expect(Math.abs(resultY2 - expectedY2)).toBeLessThanOrEqual(1)
+    expect(Math.abs(resultY2 - expectedY2)).toBeLessThanOrEqual(2)
     inputElem.value = ''
     inputElem.dispatchEvent(new Event('input', {bubbles: true, cancelable: true}))
     await new Promise(resolve => setTimeout(resolve, 500))
